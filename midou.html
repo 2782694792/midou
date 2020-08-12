@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta charset="gb2312"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="米兜甜品" content="width=device-width,initial-scale=1">
+    <title>米兜甜品</title>
+    <script>
+        var setting = {
+            // QQ收款链接
+            qqUrl: "",
+            // WeChat收款链接
+            wechatUrl: "wxp://f2f0YXW3w0mT9Nwwfj7h6B6eFELNRr8_akeJ",
+            // zfb收款链接
+            aliUrl: "https://qr.alipay.com/fkx02273x5rbi6gg6nmhx90",
+            // 动态生成二维码的API
+            qrcodeApi: "http://qr.liantu.com/api.php?text="
+            /* 备用二维码api：
+                （1）    http://s.jiathis.com/qrcode.php?url=
+                （2）    http://www.kuaizhan.com/common/encode-png?large-true&data=
+                （3）    http://b.bshare.cn/barCode?site=weixin&url= 
+                （4）    http://pan.baidu.com/share/qrcode?w=150&h=150&url=
+            */
+        }
+
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Microsoft yahei;
+        }
+
+        body {
+            background-color: #fff;
+        }
+
+        .code-item {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding-bottom: 1px;
+            display: none;
+            background-color: #5c92ef;
+        }
+
+        .code-title {
+            height: 100px;
+            background-color: #f2f2f2;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 50%;
+        }
+
+        .code-area {
+            text-align: center;
+        }
+
+        .code-area>img {
+            margin: 80px 0;
+            width: 60%;
+            min-width: 100px;
+        }
+
+        .code-footer {
+            height: 80px;
+            text-align: center;
+            background-color: #fff;
+            color: #666;
+            line-height: 80px;
+            font-size: 20px;
+            margin: -2px 2px 2px 2px;
+        }
+
+        #code-all>.code-title {
+            background-image: url("https://ww2.sinaimg.cn/large/a15b4afegy1fiw0rt77kwj2092032aa4.jpg");
+        }
+
+        #code-qq {
+            background-color: #54b4ef;
+        }
+
+        #code-qq>.code-title {
+            background-image: url("https://ww2.sinaimg.cn/large/a15b4afegy1fiw0uxpya8j20b403qaa1.jpg");
+        }
+
+        #code-wechat {
+            background-color: #54bc6e;
+        }
+
+        #code-wechat>.code-title {
+            background-image: url("https://ww2.sinaimg.cn/large/a15b4afegy1fiw0w2er9aj2092032t94.jpg");
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- 万能收款码展示 -->
+    <div class="code-item" id="code-all">
+        <div class="code-title"></div>
+        <div class="code-area">
+            <img id="page-url"
+                src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUIEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+        </div>
+        <div class="code-footer">扫描以上二维码向米兜付款</div>
+    </div>
+
+    <!--QQ钱包二维码展示区域-->
+    <div class="code-item" id="code-qq">
+        <div class="code-title"></div>
+        <div class="code-area">
+            <img id="qq-url"
+                src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUIEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+        </div>
+        <div class="code-footer">长按以上二维码向米兜付款</div>
+    </div>
+
+    <!--微信二维码展示区域-->
+    <div class="code-item" id="code-wechat">
+        <div class="code-title"></div>
+        <div class="code-area">
+            <img id="wechat-url"
+                src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUIEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+        </div>
+        <div class="code-footer">长按以上二维码向米兜付款</div>
+    </div>
+    <script>
+        if (navigator.userAgent.match(/Alipay/i)) {
+            //支付宝 
+            window.location.href = setting.aliUrl;
+        } else if (navigator.userAgent.match(/MicroMessengerV/i)) {
+            //微信 
+            document.getElementByld("wechat-url").src = setting.qrcodeApi + urlEncode(setting.wechatUrl);
+            document.getElementByld("code-wechat").style.display = "block";
+        } else if (navigator.userAgent.match(/QQV/i)) {
+            // QQ
+            document.getElementByld("qq-url").src = setting.qrcodeApi + urlEncode(setting.qqUrl);
+            document.getElementByld("code-qq").style.diaplay = "block";
+        } else {
+            // 显示万能码
+            document.getElementByld("page-url").src = setting.qrcodeApi + urlEncode(window.location.href);
+            document.getElementByld("code-all").style.diaplay = "block";
+        }
+
+        function urlEncode(String) {
+            return encodeURLComponent(String).replace(/'/g, "%27").replace(/"/g, "%22");
+        }
+
+    </script>
+</body>
+
+</html>
